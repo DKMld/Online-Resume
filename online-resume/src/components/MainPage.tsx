@@ -13,7 +13,7 @@ const ResumePage = () => {
           <Name>{resumeData.name}</Name>
           <JobTitle>{resumeData.title}</JobTitle>
           <Contact>         
-            <Email href="mailto:youremail@example.com">{resumeData.email}</Email>
+            <Email href="">{resumeData.email}</Email>
             <PhoneNumber>{resumeData.phone}</PhoneNumber>
             <LinkedIn href={resumeData.linkedin}>LinkedIn</LinkedIn>
           </Contact>
@@ -106,14 +106,6 @@ const ResumePage = () => {
 
       </Section>
 
-      {/* Contact Information */}
-      {/* <Section>
-        <SectionTitle>Contact</SectionTitle>
-        <ContactDetails>
-          Email: <a href="mailto:youremail@example.com">youremail@example.com</a><br />
-          Phone: +1-123-456-7890
-        </ContactDetails>
-      </Section> */}
     </Container>
   );
 };
