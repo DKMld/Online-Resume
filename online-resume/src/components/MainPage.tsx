@@ -1,91 +1,119 @@
 import React from 'react';
 import styled from 'styled-components';
+import resumeData from '../user-assets/user-info';
+import userImage from '../user-assets/user-icons/user_img.jpg'
 
 const ResumePage = () => {
   return (
     <Container>
       {/* Header Section */}
       <Header>
-        <ProfilePicture src="your-profile-image-url.jpg" alt="Your Name" />
+        <ProfilePicture src={userImage} alt="Your Name" />
         <div>
-          <Name>Dimitar Mladenov</Name>
-          <JobTitle>Software Developer</JobTitle>
-          <Contact>
-            <Email href="mailto:youremail@example.com">miti_01@abv.bg</Email>
-            <PhoneNumber>+359 887286159</PhoneNumber>
-            <LinkedIn href="https://linkedin.com/in/your-profile">LinkedIn</LinkedIn>
+          <Name>{resumeData.name}</Name>
+          <JobTitle>{resumeData.title}</JobTitle>
+          <Contact>         
+            <Email href="mailto:youremail@example.com">{resumeData.email}</Email>
+            <PhoneNumber>{resumeData.phone}</PhoneNumber>
+            <LinkedIn href={resumeData.linkedin}>LinkedIn</LinkedIn>
           </Contact>
         </div>
       </Header>
 
-      {/* Education */}
-      <Section>
-        <SectionTitle>Education</SectionTitle>
-        <SectionItem>
-          <Institution>Sofia University</Institution>
-          <Degree>Bachelor of Tourism</Degree>
-          <Years>2020 - Present</Years>
-        </SectionItem>
-      </Section>
 
+      
       {/* Work Experience */}
+      <SectionTitle>Experience</SectionTitle>
+
+      {resumeData.experience.map((exp, _) => (
       <Section>
-        <SectionTitle>Work Experience</SectionTitle>
         <SectionItem>
-          <JobTitle>Junior Software Developer</JobTitle>
-          <Company>ISI Emerging Markets Group</Company>
-          <Years>June, 2023 - June, 2024</Years>
-          <Description>
-            - Worked on developing and maintaining automations for downloading files from the web which are then fed into a database.<br />
-          </Description>
+          <JobTitle>{exp.title}</JobTitle>
+          <Company>{exp.company}</Company>
+          <Years>{exp.startDate} - {exp.endDate}</Years>
+          <Description>{exp.description}</Description>
         </SectionItem>
       </Section>
+    ))}
+      
+      <SectionTitle>Education</SectionTitle>
+
+      {/* Education */}
+      {resumeData.education.map((edu, _) => (
+      <Section>
+        <SectionItem>
+          <Institution>{edu.institution}</Institution>
+          <Degree>{edu.degree}</Degree>
+
+          {edu.startDate && edu.endDate &&(
+            <Years>{edu.startDate} - {edu.endDate}</Years>
+          )}
+          
+        </SectionItem>
+      </Section>
+    ))}
 
       {/* Skills */}
-      <Section>
-        <SectionTitle>Skills</SectionTitle>
+      <SectionTitle>Skills</SectionTitle>
+
+      {resumeData.skills.map((skill, index) => (
+      <Section key={index}>
         <Skills>
-          <Skill>JavaScript</Skill>
-          <Skill>React</Skill>
-          <Skill>HTML5/CSS3</Skill>
-          <Skill>Git</Skill>
-          <Skill>Node.js</Skill>
+          {skill.hard.map((softSkill, _) => (
+            <Skill >{softSkill}</Skill>
+          ))}
         </Skills>
       </Section>
+      ))}
+
+      {/*Soft Skills */}
+      <SectionTitle>Soft Skills</SectionTitle>
+
+      {resumeData.skills.map((skill, index) => (
+      <Section key={index}>
+        <Skills>
+          {skill.soft.map((softSkill, _) => (
+            <Skill >{softSkill}</Skill>
+          ))}
+        </Skills>
+      </Section>
+      ))}
+
 
       {/* Projects */}
+      <SectionTitle>Projects</SectionTitle>
+
+      {resumeData.projects.map((pro, _) => (
       <Section>
-        <SectionTitle>Projects</SectionTitle>
         <SectionItem>
-          <ProjectTitle>Portfolio Website</ProjectTitle>
-          <Description>
-            Built a personal portfolio website using React.js, showcasing projects and resume.
-          </Description>
+          <ProjectTitle>{pro}</ProjectTitle>
+          
         </SectionItem>
-        <SectionItem>
-          <ProjectTitle>Weather App</ProjectTitle>
-          <Description>
-            Developed a weather forecasting app using React and OpenWeather API.
-          </Description>
-        </SectionItem>
+        
       </Section>
+      ))}
+
 
       {/* Certifications */}
+      
       <Section>
         <SectionTitle>Certifications</SectionTitle>
+        {resumeData.certifications.map((cert, _) => (
         <SectionItem>
-          <CertificationTitle>JavaScript Advanced Course - SoftUni</CertificationTitle>
+          <CertificationTitle>{cert}</CertificationTitle>
         </SectionItem>
+      ))}
+
       </Section>
 
       {/* Contact Information */}
-      <Section>
+      {/* <Section>
         <SectionTitle>Contact</SectionTitle>
         <ContactDetails>
           Email: <a href="mailto:youremail@example.com">youremail@example.com</a><br />
           Phone: +1-123-456-7890
         </ContactDetails>
-      </Section>
+      </Section> */}
     </Container>
   );
 };
