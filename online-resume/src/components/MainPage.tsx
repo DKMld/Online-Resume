@@ -28,8 +28,7 @@ const ResumePage = () => {
       {resumeData.experience.map((exp, _) => (
       <Section>
         <SectionItem>
-          <JobTitle>{exp.title}</JobTitle>
-          <Company>{exp.company}</Company>
+          <Company>{exp.role + ' @ ' +exp.company}</Company>
           <Years>{exp.startDate} - {exp.endDate}</Years>
           <Description>{exp.description}</Description>
         </SectionItem>
@@ -113,6 +112,10 @@ const ResumePage = () => {
 export default ResumePage;
 
 /* Styled Components */
+const Role = styled.h5`
+
+`
+
 const Container = styled.div`
   max-width: 900px;
   margin: 0 auto;
@@ -254,8 +257,4 @@ const CertificationTitle = styled.p`
   color: #495057;
 `;
 
-const ContactDetails = styled.div`
-  font-size: 16px;
-  color: #333;
-`;
 

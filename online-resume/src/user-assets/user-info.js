@@ -36,7 +36,7 @@ const resumeData = {
       },
       
       {
-        institution: "Sofia University St. Kliment Ohridsk",
+        institution: "Sofia University St. Kliment Ohridski",
         degree: "Bachelor of Tourism ( Bussiness degree oriented towards the Tourism industry ) ",
         startDate: "2020",
         endDate: "present"

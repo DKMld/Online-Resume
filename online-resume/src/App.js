@@ -1,7 +1,18 @@
 import MainPage from "./components/MainPage.tsx";
+import Chat from "./components/Chat.tsx";
 
 function App() {
-  return <div><MainPage /></div>
+  return <div>
+    
+  <Chat/>
+  <MainPage/>
+
+</div>
+
+
+
+  // return <div><MainPage /></div>
+  
 }
 
 
