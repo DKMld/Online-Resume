@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai"; // Ensure this package is correctly installed and used
 
 
-const API_KEY = process.env.REACT_APP_GOOGLE_API
+const API_KEY = GOOGLE_API
 
 const getGoogleAiResponse = async (message) => {
     // Initialize Google Generative AI with the provided API key
