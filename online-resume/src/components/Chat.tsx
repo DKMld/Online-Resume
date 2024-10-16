@@ -2,6 +2,161 @@ import React, { useState, useEffect } from 'react';
 import getGoogleAiResponse from '../api';
 import styled from 'styled-components';
 
+type Message = {
+    msg: string;
+    sender: 'user' | 'bot';
+  };
+
+const Chatbot = () => {
+    const [isActive, setIsActive] = useState(false);
+    const [allMessages, addMessage] = useState<Message[]>([]);
+    const [response, setResponse] = useState('');
+
+    const getInputMessage = () => {
+        const inputMsg = document.getElementById("chatInputId");
+        if (inputMsg instanceof HTMLInputElement){
+            return inputMsg?.value
+        }
+        return null
+    }  
+
+    const GetChatOutput = async (message:string) => {
+    
+        try{
+            const responseFromAI = await getGoogleAiResponse(message)
+    
+            if (typeof responseFromAI === 'string'){
+                setResponse(responseFromAI)
+            }else{
+                setResponse("Sorry could't get any information right now, will be right back soon :)")
+            } 
+    
+        }catch (error) {
+            setResponse("Sorry could't get any information right now, will be right back soon :)");
+        };
+        
+        return response
+    }
+
+    const compileChatOutput = async () => {
+        const currentMessage = getInputMessage();
+
+        
+        
+        const handleMessages = async (msg,sender) => {
+            const newMsg = {msg, sender}
+
+            addMessage((prevMessages) => [...prevMessages, newMsg]);
+        }
+
+        if (currentMessage !== null){
+            handleMessages(currentMessage, 'user')
+
+            const aiResponse = await GetChatOutput(currentMessage)
+            console.log(aiResponse)
+            if (aiResponse){
+                await handleMessages(aiResponse, 'bot')
+
+            }
+
+        }
+
+        // document.getElementById("sendBtn")?.addEventListener("click", function(){
+
+        //     let inputField = document.getElementById('chatInputId') as HTMLInputElement
+        //     inputField.value = ""
+            
+
+        // });
+
+    }
+
+    const toggleChatbot = () => {
+      setIsActive(!isActive);
+    };
+
+
+    return (
+      <ChatbotContainer>
+        <ChatbotButton onClick={toggleChatbot}>
+          💬
+        </ChatbotButton>
+        <ChatbotPopup active={isActive}>
+          <ChatbotHeader>
+            <h3>Chatbot</h3>
+            <CloseButton onClick={toggleChatbot}>×</CloseButton>
+          </ChatbotHeader>
+          <ChatbotBody>
+          {allMessages.map((message, index) => (
+            <p key={index} className={message.sender === 'user' ? 'user-message' : 'chatbot-message'}>
+              {message.sender === 'user' ? 'User: ' : 'Chatbot: '}
+              {message.msg}
+            </p>
+          ))}
+        </ChatbotBody>
+          <ChatbotFooter>
+            <InputField id="chatInputId" type="text" placeholder="Type your message..." />
+            <SendButton id='sendBtn' onClick={compileChatOutput}>Send</SendButton>
+          </ChatbotFooter>
+        </ChatbotPopup>
+      </ChatbotContainer>
+    );
+  };
+  
+
+  export default Chatbot;
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // useEffect(() => {
+    //     getResponse();
+
+    // }, [])
+    
+  
+    // return (
+    //   <div>
+    //     <h1>AI Response</h1>
+    //     <h1>{response}</h1>
+        
+    //   </div>
+    // );
+//   };
+  
+//   export default Chat;
+    
+
+
+
+
+
+
+
+
 const ChatbotContainer = styled.div`
   position: fixed;
   bottom: 30px;
@@ -90,77 +245,8 @@ const SendButton = styled.button`
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
-
+  
   &:hover {
     background-color: #0056b3;
   }
 `;
-const Chatbot = () => {
-    const [isActive, setIsActive] = useState(false);
-  
-    const toggleChatbot = () => {
-      setIsActive(!isActive);
-    };
-  
-    return (
-      <ChatbotContainer>
-        <ChatbotButton onClick={toggleChatbot}>
-          💬
-        </ChatbotButton>
-        <ChatbotPopup active={isActive}>
-          <ChatbotHeader>
-            <h3>Chatbot</h3>
-            <CloseButton onClick={toggleChatbot}>×</CloseButton>
-          </ChatbotHeader>
-          <ChatbotBody>
-            <p>Hi! How can I assist you today?</p>
-            {/* Add chat messages or chatbot logic here */}
-          </ChatbotBody>
-          <ChatbotFooter>
-            <InputField type="text" placeholder="Type your message..." />
-            <SendButton>Send</SendButton>
-          </ChatbotFooter>
-        </ChatbotPopup>
-      </ChatbotContainer>
-    );
-  };
-  
-  export default Chatbot;
-
-// const Chat = () => {
-//     const [response, setResponse] = useState('');
-
-//     const getResponse = async () => {
-
-//         try{
-//             const responseFromAI = await getGoogleAiResponse("Hello")
-
-//             if (typeof responseFromAI === 'string'){
-//                 setResponse(responseFromAI)
-//             }else{
-//                 setResponse("Cant get anythin")
-//             } 
-
-//         }catch (error) {
-//             setResponse("Error: " + error.message);
-//         };
-        
-//     };
-    
-//     useEffect(() => {
-//         getResponse();
-
-//     }, [])
-    
-  
-//     return (
-//       <div>
-//         <h1>AI Response</h1>
-//         <h1>{response}</h1>
-        
-//       </div>
-//     );
-//   };
-  
-//   export default Chat;
-    

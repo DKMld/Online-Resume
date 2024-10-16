@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai"; // Ensure this package is correctly installed and used
 
-// Ideally, API keys should be stored in environment variables for security
-const API_KEY = 'AIzaSyDUXBhLLoTe_1garTYyvCnZxSdyNDlaHEI';
+
+const API_KEY = process.env.REACT_APP_GOOGLE_API
 
 const getGoogleAiResponse = async (message) => {
     // Initialize Google Generative AI with the provided API key
